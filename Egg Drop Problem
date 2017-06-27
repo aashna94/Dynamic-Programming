@@ -1,0 +1,62 @@
+//
+//  main.cpp
+//  oky
+//
+//  Created by aashna on 20/06/17.
+//  Copyright © 2017 q. All rights reserved.
+//
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <stack>
+#include <string>
+#include <climits>
+#include <stdio.h>
+#include <string.h>
+#include <cassert>
+#include <algorithm>
+#include <stack>
+#include <map>
+#include <list>
+#include <set>
+#include <math.h>
+
+using namespace std;
+
+void eggDrop(int egg, int floor)
+{
+    int i,j,x,res;
+    int dp[egg+1][floor+1];
+    for (i=1; i<=egg; i++)
+    {
+        dp[i][0]=0;
+        dp[i][1]=1;
+    }
+    for (i=1; i<=floor; i++)
+    {
+        dp[1][i]=i;
+    }
+    for (i=2; i<=egg; i++)
+    {
+        for (j=2; j<=floor; j++)
+        {
+            dp[i][j]=INT_MAX;
+            for (x=1; x<=j; x++)
+            {
+                res=1 + max(dp[i-1][x-1], dp[i][j-x]);
+                if(res<dp[i][j])
+                    dp[i][j]=res;
+            }
+        }
+    }
+    cout<<dp[egg][floor];
+}
+
+int main(int argc, const char * argv[])
+{
+    int egg,floor;
+    cin>>egg>>floor;
+    eggDrop(egg, floor);
+    return 0;
+}
