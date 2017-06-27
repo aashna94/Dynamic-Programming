@@ -1,0 +1,59 @@
+//
+//  main.cpp
+//  oky
+//
+//  Created by aashna on 20/06/17.
+//  Copyright © 2017 q. All rights reserved.
+//
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <stack>
+#include <string>
+#include <climits>
+#include <stdio.h>
+#include <string.h>
+#include <cassert>
+#include <algorithm>
+#include <stack>
+#include <map>
+#include <list>
+#include <set>
+#include <math.h>
+
+using namespace std;
+
+void ways(int *denom, int coins, int cents)
+{
+    int i,j,x,y;
+    int dp[cents+1][coins];
+    for (i=0 ; i<coins; i++)
+    {
+        dp[0][i]=1;
+    }
+    for (i=1; i<cents+1; i++)
+    {
+        for (j=0; j<=coins; j++)
+        {
+            x=(i-denom[j]>=0)?dp[i-denom[j]][j]:0;
+            y=(j>=1)?dp[i][j-1]:0;
+            dp[i][j]=x+y;
+        }
+    }
+    cout<<dp[cents][coins-1];
+}
+
+int main(int argc, const char * argv[])
+{
+    int i,coins,cents;
+    cin>>coins>>cents;
+    int *denom=new int[coins];
+    for (i=0; i<coins; i++)
+    {
+        cin>>denom[i];
+    }
+    ways(denom, coins, cents);
+    return 0;
+}
+
